@@ -117,7 +117,7 @@ jobs:
 
       - name: Copy files to build directory
         run: |
-          cp -r index.html css/ js/ images/ build/
+          cp -r index.html css/ js/ images/ assets/ build/
           echo "✅ Files copied to build directory"
 
       - name: Minify CSS (optional)
