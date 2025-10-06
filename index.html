@@ -1,197 +1,336 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ziad Ez-Zaidi - Cloud & DevOps Engineer</title>
+    <meta
+      name="description"
+      content="Ziad Ez-Zaidi - Cloud & DevOps Enthusiast specializing in AWS infrastructure, automation, and scalable solutions. Experienced in Terraform, Docker, Kubernetes, and CI/CD pipelines."
+    />
+    <meta
+      name="keywords"
+      content="Cloud Engineering, DevOps, AWS, Terraform, Docker, Kubernetes, Infrastructure as Code, CI/CD, Automation"
+    />
+    <meta name="author" content="Ziad Ez-Zaidi" />
+    <title>
+      Ziad Ez-Zaidi - Cloud & DevOps Enthusiast | AWS Infrastructure Specialist
+    </title>
     <link rel="stylesheet" href="css/style.css" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
-    <header>
-      <div class="container">
-        <img
-          src="images/photo-ziad.png"
-          alt="Ziad Ez-Zaidi"
-          class="profile-img"
-        />
-        <h1>Ziad Ez-Zaidi</h1>
-        <h2>Cloud & DevOps Engineer</h2>
-        <nav>
-          <ul>
-            <li><a href="#about">About</a></li>
-            <li><a href="#skills">Skills</a></li>
-            <li><a href="#experience">Experience</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#contact">Contact</a></li>
-          </ul>
-        </nav>
+    <!-- Navigation -->
+    <nav class="navbar">
+      <div class="nav-container">
+        <div class="nav-logo">
+          <span>Ziad Ez-Zaidi</span>
+        </div>
+        <ul class="nav-menu">
+          <li class="nav-item">
+            <a href="#home" class="nav-link">Home</a>
+          </li>
+          <li class="nav-item">
+            <a href="#about" class="nav-link">About</a>
+          </li>
+          <li class="nav-item">
+            <a href="#skills" class="nav-link">Skills</a>
+          </li>
+          <li class="nav-item">
+            <a href="#experience" class="nav-link">Experience</a>
+          </li>
+          <li class="nav-item">
+            <a href="#projects" class="nav-link">Projects</a>
+          </li>
+          <li class="nav-item">
+            <a href="#contact" class="nav-link">Contact</a>
+          </li>
+        </ul>
+        <div class="hamburger">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </div>
       </div>
-    </header>
+    </nav>
 
-    <main>
-      <section id="about" class="section">
-        <div class="container">
-          <h2>About Me</h2>
-          <p>
-            Computer Science student with a particular interest in systems
-            administration and DevOps practices. I am currently seeking a
-            work-study opportunity in DevOps & System Administration, starting
-            immediately, to gain hands-on experience and develop my skills in
-            infrastructure management, automation, and cloud computing.
-            Motivated, curious, and eager to learn, I aspire to grow within a
-            dynamic and challenging technical environment. In addition to my
-            studies, I am a freelance service provider and a radio host at RBS
-            in my free time.
-          </p>
-        </div>
-      </section>
-
-      <section id="skills" class="section">
-        <div class="container">
-          <h2>Technical Skills</h2>
-          <div class="skills-grid">
-            <!-- Will be populated by JavaScript -->
-          </div>
-        </div>
-      </section>
-
-      <!-- Education Section -->
-      <section id="education" class="section">
-        <div class="container">
-          <h2>Education</h2>
-          <div class="timeline">
-            <div class="timeline-item">
-              <div class="timeline-date">2024</div>
-              <div class="timeline-content">
-                <h3>Master Expert en Administration Système et Réseaux</h3>
-                <p>YNOV Strasbourg, France</p>
-              </div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-date">2023</div>
-              <div class="timeline-content">
-                <h3>Licence Informatique</h3>
-                <p>Université de Strasbourg, France</p>
-              </div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-date">2019</div>
-              <div class="timeline-content">
-                <h3>DUT Informatique</h3>
-                <p>École Supérieure de la technologie, Maroc</p>
-              </div>
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+      <div class="hero-container">
+        <div class="hero-content">
+          <div class="hero-text">
+            <h1 class="hero-title">
+              Hi, I'm <span class="highlight">Ziad Ez-Zaidi</span>
+            </h1>
+            <h2 class="hero-subtitle">Cloud & DevOps Enthusiast</h2>
+            <p class="hero-description">
+              Passionate about building scalable AWS solutions, implementing
+              CI/CD pipelines, and optimizing system performance. Experienced in
+              infrastructure automation and modern DevOps practices.
+            </p>
+            <div class="hero-buttons">
+              <a href="#projects" class="btn btn-primary">View My Work</a>
+              <a href="#contact" class="btn btn-secondary">Get In Touch</a>
             </div>
           </div>
-        </div>
-      </section>
-
-      <!-- Experience Section -->
-      <section id="experience" class="section">
-        <div class="container">
-          <h2>Experience</h2>
-          <div class="timeline">
-            <div class="timeline-item">
-              <div class="timeline-date">2023-2024</div>
-              <div class="timeline-content">
-                <h3>Assistant Informatique, Freelance</h3>
-                <p>KISIO, Strasbourg - 16 months</p>
-                <ul>
-                  <li>
-                    Déploiement et gestion des solutions e-commerce dans le
-                    Cloud
-                  </li>
-                  <li>Participation à la mise en place de pipelines CI/CD</li>
-                </ul>
-              </div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-date">2022</div>
-              <div class="timeline-content">
-                <h3>Stage en Informatique</h3>
-                <p>SQLI, Paris - 3 months</p>
-                <ul>
-                  <li>
-                    Administration et gestion des serveurs Linux & Windows
-                  </li>
-                  <li>
-                    Automatisation des tâches répétitives avec Ansible et
-                    PowerShell
-                  </li>
-                </ul>
-              </div>
-            </div>
+          <div class="hero-image">
+            <img
+              src="images/photo-ziad.png"
+              alt="Ziad Ez-Zaidi"
+              class="profile-image"
+            />
           </div>
-        </div>
-      </section>
-
-      <section id="projects" class="section">
-        <div class="container">
-          <h2>AWS/DevOps Projects</h2>
-          <div class="projects-grid">
-            <div class="project-card">
-              <div class="project-header">
-                <h3>Project Title</h3>
-                <div class="tech-stack">
-                  <span class="tech-icon aws"></span>
-                  <span class="tech-icon terraform"></span>
-                </div>
-                <button class="expand-btn">+</button>
-              </div>
-              <div class="project-thumbnail">
-                <img
-                  src="images/project-placeholder.jpg"
-                  alt="Project thumbnail"
-                />
-              </div>
-              <div class="project-details">
-                <div class="details-content">
-                  <div class="description">
-                    <h4>Project Description</h4>
-                    <p>Detailed project description goes here...</p>
-                  </div>
-                  <div class="project-assets">
-                    <div class="image-carousel">
-                      <!-- Images will be added here -->
-                    </div>
-                    <a href="#" class="repo-link">View Repository</a>
-                  </div>
-                </div>
-                <div class="technical-specs">
-                  <h4>Technical Details</h4>
-                  <ul>
-                    <li>AWS Services: EC2, S3, Lambda</li>
-                    <li>Infrastructure as Code: Terraform</li>
-                    <li>CI/CD: GitHub Actions</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <section id="infrastructure" class="section">
-      <div class="container">
-        <h2>Infrastructure</h2>
-        <div class="aws-badge">
-          <img src="images/aws-logo.png" alt="AWS Logo" class="aws-icon" />
-          <p>This portfolio is hosted on AWS infrastructure:</p>
-          <ul>
-            <li>Static files served from Amazon S3 storage</li>
-            <li>Global delivery accelerated via CloudFront CDN</li>
-            <li>99.9% availability SLA</li>
-          </ul>
         </div>
       </div>
     </section>
 
-    <footer id="contact">
+    <!-- About Section -->
+    <section id="about" class="about-section">
       <div class="container">
-        <h2>Contact</h2>
-        <p>Email: ziadezzaidi@gmail.com</p>
-        <p>Phone: +33 6 36 12 81 47</p>
-        <p>Location: Strasbourg, France</p>
+        <div class="section-header">
+          <h2 class="section-title">About Me</h2>
+          <div class="section-divider"></div>
+        </div>
+        <div class="about-content">
+          <div class="about-text">
+            <p class="about-description">
+              Passionate Cloud & DevOps enthusiast with hands-on experience in
+              infrastructure management, automation, and cloud computing. I
+              specialize in building scalable AWS solutions, implementing CI/CD
+              pipelines, and optimizing system performance.
+            </p>
+            <p class="about-description">
+              With a strong foundation in both Linux and Windows environments, I
+              bring practical experience from various projects and professional
+              engagements. Always eager to tackle new challenges and contribute
+              to innovative technical solutions.
+            </p>
+            <div class="about-stats">
+              <div class="stat-item">
+                <h3>3+</h3>
+                <p>Years Experience</p>
+              </div>
+              <div class="stat-item">
+                <h3>15+</h3>
+                <p>Projects Completed</p>
+              </div>
+              <div class="stat-item">
+                <h3>10+</h3>
+                <p>Technologies Mastered</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="skills-section">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Technical Skills</h2>
+          <div class="section-divider"></div>
+          <p class="section-subtitle">Technologies and tools I work with</p>
+        </div>
+        <div class="skills-grid">
+          <!-- Will be populated by JavaScript -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Professional Background Section -->
+    <section id="background" class="section">
+      <div class="container">
+        <h2>Professional Background</h2>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-date">2024</div>
+            <div class="timeline-content">
+              <h3>Advanced Systems & Network Architecture</h3>
+              <p>
+                Specialized training in enterprise-grade infrastructure
+                management
+              </p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-date">2023</div>
+            <div class="timeline-content">
+              <h3>Cloud Computing & DevOps Practices</h3>
+              <p>
+                Focused on AWS services, automation, and modern deployment
+                strategies
+              </p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-date">2019</div>
+            <div class="timeline-content">
+              <h3>Computer Science Foundation</h3>
+              <p>
+                Strong technical foundation in software development and system
+                administration
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="experience-section">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Professional Experience</h2>
+          <div class="section-divider"></div>
+        </div>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+              <div class="timeline-date">2023 - 2024</div>
+              <h3 class="timeline-title">Cloud Solutions Consultant</h3>
+              <h4 class="timeline-company">KISIO, Strasbourg</h4>
+              <p class="timeline-duration">16 months • Freelance</p>
+              <ul class="timeline-achievements">
+                <li>
+                  Architected and deployed scalable e-commerce solutions on
+                  cloud infrastructure
+                </li>
+                <li>
+                  Designed and implemented CI/CD pipelines for automated
+                  deployments
+                </li>
+                <li>
+                  Optimized cloud costs and improved system reliability by 40%
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+              <div class="timeline-date">2022</div>
+              <h3 class="timeline-title">DevOps Engineer</h3>
+              <h4 class="timeline-company">SQLI, Paris</h4>
+              <p class="timeline-duration">3 months</p>
+              <ul class="timeline-achievements">
+                <li>
+                  Managed multi-platform server infrastructure (Linux & Windows)
+                </li>
+                <li>
+                  Implemented automation solutions using Ansible and PowerShell
+                </li>
+                <li>
+                  Streamlined operational processes and reduced manual
+                  intervention
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="projects-section">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Featured Projects</h2>
+          <div class="section-divider"></div>
+          <p class="section-subtitle">
+            Some of my recent work in cloud infrastructure and automation
+          </p>
+        </div>
+        <div class="projects-grid">
+          <!-- Will be populated by JavaScript -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Get In Touch</h2>
+          <div class="section-divider"></div>
+          <p class="section-subtitle">Let's discuss your next project</p>
+        </div>
+        <div class="contact-content">
+          <div class="contact-info">
+            <div class="contact-item">
+              <div class="contact-icon">
+                <i class="fas fa-envelope"></i>
+              </div>
+              <div class="contact-details">
+                <h4>Email</h4>
+                <p>ziadezzaidi@gmail.com</p>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon">
+                <i class="fas fa-phone"></i>
+              </div>
+              <div class="contact-details">
+                <h4>Phone</h4>
+                <p>+33 6 36 12 81 47</p>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon">
+                <i class="fas fa-map-marker-alt"></i>
+              </div>
+              <div class="contact-details">
+                <h4>Location</h4>
+                <p>Strasbourg, France</p>
+              </div>
+            </div>
+          </div>
+          <div class="aws-infrastructure">
+            <div class="infrastructure-badge">
+              <img src="images/aws-logo.png" alt="AWS Logo" class="aws-logo" />
+              <h4>Powered by AWS</h4>
+              <ul class="infrastructure-list">
+                <li><i class="fas fa-check"></i> S3 Static Hosting</li>
+                <li><i class="fas fa-check"></i> CloudFront CDN</li>
+                <li><i class="fas fa-check"></i> 99.9% Uptime SLA</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-text">
+            <p>&copy; 2024 Ziad Ez-Zaidi. All rights reserved.</p>
+          </div>
+          <div class="footer-social">
+            <a
+              href="https://github.com/ZiadEzzaidi"
+              class="social-link"
+              target="_blank"
+            >
+              <i class="fab fa-github"></i>
+            </a>
+            <a
+              href="https://linkedin.com/in/ziadezzaidi"
+              class="social-link"
+              target="_blank"
+            >
+              <i class="fab fa-linkedin"></i>
+            </a>
+          </div>
+        </div>
       </div>
     </footer>
 

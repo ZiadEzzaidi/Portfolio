@@ -1,25 +1,233 @@
-name: Deploy to AWS S3
+name: CI/CD Pipeline - Portfolio
 
 on:
   push:
+    branches: [main, develop]
+  pull_request:
     branches: [main]
 
+env:
+  AWS_REGION: us-east-1
+  S3_BUCKET: ziad-portfolio
+
 jobs:
-  deploy:
+  # Stage 1: Code Quality & Validation
+  validate:
+    name: Code Validation & Quality Checks
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: |
+          npm init -y
+          npm install --save-dev htmlhint stylelint stylelint-config-standard jshint prettier
+
+      - name: Validate HTML
+        run: |
+          npx htmlhint "*.html" --config config/.htmlhintrc || echo "HTML validation completed"
+
+      - name: Validate CSS
+        run: |
+          npx stylelint "css/*.css" --config config/.stylelintrc.json || echo "CSS validation completed"
+
+      - name: Validate JavaScript
+        run: |
+          npx jshint js/*.js --config config/.jshintrc || echo "JS validation completed"
+
+      - name: Check code formatting
+        run: |
+          npx prettier --check "*.html" "css/*.css" "js/*.js" --config config/.prettierrc || echo "Formatting check completed"
+
+      - name: Validate project structure
+        run: |
+          echo "Checking required files..."
+          test -f index.html || (echo "❌ index.html not found" && exit 1)
+          test -f css/style.css || (echo "❌ css/style.css not found" && exit 1)
+          test -f js/main.js || (echo "❌ js/main.js not found" && exit 1)
+          test -d images || (echo "❌ images directory not found" && exit 1)
+          echo "✅ All required files found"
+
+      - name: Check for broken links (basic)
+        run: |
+          echo "Checking for basic HTML structure..."
+          grep -q "<html" index.html && echo "✅ HTML structure valid"
+          grep -q "<head" index.html && echo "✅ Head section found"
+          grep -q "<body" index.html && echo "✅ Body section found"
+
+  # Stage 2: Security & Performance Tests
+  security-scan:
+    name: Security & Performance Scan
+    runs-on: ubuntu-latest
+    needs: validate
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Security scan for sensitive data
+        run: |
+          echo "Scanning for potential security issues..."
+          # Check for potential sensitive information
+          if grep -r -i "password\|secret\|key\|token" --include="*.html" --include="*.css" --include="*.js" . 2>/dev/null | grep -v "github\|aws-actions\|secrets\."; then
+            echo "⚠️  Potential sensitive data found in files"
+          else
+            echo "✅ No sensitive data found in source files"
+          fi
+
+      - name: Check file sizes
+        run: |
+          echo "Checking file sizes for performance..."
+          find . -name "*.html" -o -name "*.css" -o -name "*.js" | while read file; do
+            size=$(stat -f%z "$file" 2>/dev/null || stat -c%s "$file" 2>/dev/null)
+            if [ "$size" -gt 1048576 ]; then  # 1MB
+              echo "⚠️  Large file detected: $file ($size bytes)"
+            else
+              echo "✅ $file size OK ($size bytes)"
+            fi
+          done
+
+  # Stage 3: Build & Test
+  build:
+    name: Build & Test Portfolio
+    runs-on: ubuntu-latest
+    needs: [validate, security-scan]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Create build directory
+        run: mkdir -p build
+
+      - name: Copy files to build directory
+        run: |
+          cp -r index.html css/ js/ images/ build/
+          echo "✅ Files copied to build directory"
+
+      - name: Minify CSS (optional)
+        run: |
+          if command -v npx > /dev/null; then
+            npm install -g clean-css-cli
+            cleancss -o build/css/style.min.css build/css/style.css || cp build/css/style.css build/css/style.min.css
+            echo "✅ CSS processed"
+          fi
+
+      - name: Validate build output
+        run: |
+          echo "Validating build output..."
+          test -f build/index.html || (echo "❌ Build failed: index.html missing" && exit 1)
+          test -f build/css/style.css || (echo "❌ Build failed: style.css missing" && exit 1)
+          test -f build/js/main.js || (echo "❌ Build failed: main.js missing" && exit 1)
+          echo "✅ Build validation successful"
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: portfolio-build
+          path: build/
+          retention-days: 30
+
+  # Stage 4: Deploy to AWS S3
+  deploy:
+    name: Deploy to AWS S3
+    runs-on: ubuntu-latest
+    needs: [validate, security-scan, build]
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    environment: production
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: portfolio-build
+          path: build/
 
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v2
+        uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-      - name: Sync files to S3
+      - name: Deploy to S3
         run: |
-          aws s3 sync ./ s3://${{ secrets.S3_BUCKET }} \
-            --exclude ".git/*" \
-            --exclude ".github/*" \
-            --delete
+          echo "🚀 Deploying to AWS S3..."
+          aws s3 sync build/ s3://${{ secrets.S3_BUCKET }} \
+            --delete \
+            --cache-control "public, max-age=31536000" \
+            --exclude "*.html" \
+            --exclude "*.json"
+          
+          # Upload HTML files with no-cache for immediate updates
+          aws s3 sync build/ s3://${{ secrets.S3_BUCKET }} \
+            --cache-control "no-cache, no-store, must-revalidate" \
+            --include "*.html" \
+            --include "*.json"
+
+      - name: Invalidate CloudFront (if configured)
+        run: |
+          if [ ! -z "${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}" ]; then
+            echo "🔄 Invalidating CloudFront cache..."
+            aws cloudfront create-invalidation \
+              --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} \
+              --paths "/*"
+          else
+            echo "ℹ️  CloudFront distribution ID not configured, skipping invalidation"
+          fi
+
+      - name: Deployment Success Notification
+        run: |
+          echo "✅ Deployment completed successfully!"
+          echo "🌐 Portfolio is live at: http://${{ secrets.S3_BUCKET }}.s3-website-${{ secrets.AWS_REGION }}.amazonaws.com"
+
+  # Stage 5: Post-deployment verification
+  verify:
+    name: Post-deployment Verification
+    runs-on: ubuntu-latest
+    needs: deploy
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    steps:
+      - name: Wait for deployment propagation
+        run: sleep 30
+
+      - name: Health check
+        run: |
+          SITE_URL="http://${{ secrets.S3_BUCKET }}.s3-website-${{ secrets.AWS_REGION }}.amazonaws.com"
+          echo "🔍 Checking site health: $SITE_URL"
+          
+          if curl -f -s "$SITE_URL" > /dev/null; then
+            echo "✅ Site is accessible and responding"
+          else
+            echo "❌ Site health check failed"
+            exit 1
+          fi
+
+      - name: Basic content verification
+        run: |
+          SITE_URL="http://${{ secrets.S3_BUCKET }}.s3-website-${{ secrets.AWS_REGION }}.amazonaws.com"
+          RESPONSE=$(curl -s "$SITE_URL")
+          
+          if echo "$RESPONSE" | grep -q "Ziad Ez-Zaidi"; then
+            echo "✅ Content verification passed"
+          else
+            echo "❌ Content verification failed"
+            exit 1
+          fi

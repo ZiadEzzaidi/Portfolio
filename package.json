@@ -1,0 +1,51 @@
+{
+  "name": "ziad-portfolio",
+  "version": "1.0.0",
+  "description": "Cloud & DevOps Portfolio with automated CI/CD pipeline",
+  "main": "index.html",
+  "scripts": {
+    "lint": "npm run lint:html && npm run lint:css && npm run lint:js",
+    "lint:html": "htmlhint index.html --config config/.htmlhintrc",
+    "lint:css": "stylelint css/*.css --config config/.stylelintrc.json",
+    "lint:js": "jshint js/*.js --config config/.jshintrc",
+    "format": "prettier --write \"*.html\" \"css/*.css\" \"js/*.js\" --config config/.prettierrc",
+    "format:check": "prettier --check \"*.html\" \"css/*.css\" \"js/*.js\" --config config/.prettierrc",
+    "validate": "npm run lint && npm run format:check",
+    "build": "if not exist build mkdir build && copy index.html build\\ && xcopy css build\\css\\ /E /I && xcopy js build\\js\\ /E /I && xcopy images build\\images\\ /E /I && xcopy assets build\\assets\\ /E /I",
+    "serve": "python -m http.server 8000 2>nul || python3 -m http.server 8000 2>nul || py -m http.server 8000 2>nul || echo Please install Python or open index.html directly in your browser",
+    "serve:open": "start index.html",
+    "deploy:manual": "aws s3 sync . s3://ziad-portfolio --exclude \".git/*\" --exclude \".github/*\" --exclude \"node_modules/*\" --delete",
+    "test": "npm run validate && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ZiadEzzaidi/Portfolio.git"
+  },
+  "keywords": [
+    "portfolio",
+    "cloud",
+    "devops",
+    "aws",
+    "s3",
+    "ci-cd",
+    "github-actions"
+  ],
+  "author": "Ziad Ez-Zaidi <ziadezzaidi@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "clean-css-cli": "^5.6.2",
+    "htmlhint": "^1.1.4",
+    "jshint": "^2.13.6",
+    "prettier": "^3.0.3",
+    "stylelint": "^15.11.0",
+    "stylelint-config-standard": "^34.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ],
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}
